@@ -1,12 +1,11 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/lgndluke/REI3-Tickets-MCP-Server"><img width="200" alt="REI3_MCP_Server_Logo" src="https://github.com/user-attachments/assets/5d4348cb-8eab-4035-89a0-5eedfade81b4" /></a>
+  <a href="https://github.com/lgndluke/REI3-Tickets-MCP-Server"><img width="200" alt="REI3_MCP_Server_Logo" src="https://github.com/user-attachments/assets/dfac4e23-ddeb-4fdd-a1fe-8af413fb2c60" /></a>
   <br>
   REI3 Tickets MCP Server
   <br>
 </h1>
-
 
 <h4 align="center">A simple FastMCP server for the REI3 Tickets application.</h4>
 
