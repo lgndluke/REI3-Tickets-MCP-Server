@@ -1,0 +1,63 @@
+#!/bin/sh
+#
+# An hook script to check the commit log message.
+# Called by "git commit" with one argument, the name of the file
+# that has the commit message.  The hook should exit with non-zero
+# status after issuing an appropriate message if it wants to stop the
+# commit.  The hook is allowed to edit the commit message file.
+#
+# To enable this hook, copy this file to ".git/hooks/commit-msg" and
+# ensure it is executable.
+#
+#
+# NOTE: This script supports both user commit messages and the
+# automatic Git merge/revert messages.
+#
+
+commit_msg_file=$1
+
+test -n "$(grep -E '^(Merge|Revert|((feat|fix|docs|style|refactor|perf|test|chore)\((.*)\)):)' ${1})" || {
+echo >&2 "ERROR: Commit message does not follow the commit styleguide."
+echo >&2 "       Please check the guide:"
+echo >&2 "           https://github.com/angular/angular.js/blob/v1.5.0/CONTRIBUTING.md#commit"
+echo >&2 ""
+echo >&2 "SYNTAX:"
+echo >&2 "    <type>(<scope>): <subject>"
+echo >&2 ""
+echo >&2 "    <descriptive body>"
+echo >&2 ""
+echo >&2 "TYPE:"
+echo >&2 "    feat: A new feature"
+echo >&2 "    fix: A bug fix"
+echo >&2 "    docs: Documentation only changes"
+echo >&2 "    style: Changes that do not affect the meaning of the code"
+echo >&2 "    refactor: A code change that neither fixes a bug nor adds a feature"
+echo >&2 "    perf: A code change that improves performance"
+echo >&2 "    test: Adding missing tests"
+echo >&2 "    chore: Changes to the build process or auxiliary tools and libraries"
+echo >&2 "SCOPE:"
+echo >&2 "    The scope could be anything specifying place of the commit change"
+echo >&2 ""
+echo >&2 "EXAMPLE:"
+echo >&2 "    perf(backend): avoid jqLite/jQuery for upward DOM traversal"
+echo >&2 ""
+echo >&2 "    The 'parentNode' property is well supported between all browsers. Since"
+echo >&2 "    no other functionality was required here, we can use the DOM API directly."
+exit 1
+}
+
+line_count=$(wc -l < "$commit_msg_file")
+if [ "$line_count" -gt 1 ]; then
+  second_line=$(sed -n '2p' "$commit_msg_file")
+  if [ -n "$second_line" ]; then
+    echo >&2 "ERROR: Second line must be empty to separate header and body."
+    exit 1
+  fi
+fi
+
+header_line=$(head -n 1 "$commit_msg_file")
+max_length=72
+if [ ${#header_line} -gt $max_length ]; then
+  echo >&2 "ERROR: Commit header too long (${#header_line} chars). Max is $max_length."
+  exit 1
+fi
