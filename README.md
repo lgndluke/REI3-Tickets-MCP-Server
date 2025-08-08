@@ -12,6 +12,7 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#installation">Installation</a> •
+  <a href="#demonstration">Demonstration</a> •
   <a href="#credits">Credits</a>
 </p>
 
@@ -56,8 +57,33 @@
 }
 ```
 
+## Demonstration
+
+#### Creating a REI3 ticket using the REI3-Tickets-MCP-Server:
+
+<img width="1309" height="248" alt="grafik" src="https://github.com/user-attachments/assets/2dc69e13-e742-4376-8b29-821fa1ae298a" />
+
+#### Created ticket:
+
+<img width="1918" height="947" alt="Created_Ticket_in_Not_Assigned" src="https://github.com/user-attachments/assets/19a4cd47-067a-48c3-8617-ce14919f78e9" />
+
+#### Created ticket worklog:
+
+<img width="1876" height="806" alt="Created_Ticket_Worklog" src="https://github.com/user-attachments/assets/7f9baeab-8c46-44ad-8dce-0873d11ff3c2" />
+
+#### Creating a worklog entry inside a existing ticket:
+
+<img width="1320" height="398" alt="Creating_Ticket_Worklog_with_MCP_Server" src="https://github.com/user-attachments/assets/abec409e-ff49-4867-8404-0f41ee669065" />
+
+#### Created ticket worklog:
+
+<img width="1877" height="810" alt="Create_Second_Ticket_Worklog" src="https://github.com/user-attachments/assets/dd4f9b10-7c16-47b6-9318-7e50bd14adeb" />
+
+####
+
 ## Credits
 
 This software utilizes:
 
 - [REI3](https://github.com/r3-team/r3)
+
