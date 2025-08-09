@@ -31,13 +31,15 @@
 
 3. Add uv to PATH.
 
-4. Set up an API Profile in your REI3 tickets instance. <br> You can create one under: Tickets > Admin Tab > API profiles 
+4. Create a designated user in REI3 with access to the Tickets API role. <br> This user will be used for authentication.
 
-5. Download/Clone and extract this repository and adjust the .env file variables.
+5. Set up an API Profile in your REI3 tickets instance. <br> You can create one under: Tickets > Admin Tab > API profiles 
 
-6. Ensure you have an MCP Client with the capability to run MCP tools at your disposal. <br> I used [AnythingLLM](https://anythingllm.com/)
+6. Download/Clone and extract this repository and adjust the .env file variables.
 
-7. Configure the MCP-Server JSON configuration to include the REI3-Tickets-MCP-Server.
+7. Ensure you have an MCP Client with the capability to run MCP tools at your disposal. <br> I used [AnythingLLM](https://anythingllm.com/)
+
+8. Configure the MCP-Server JSON configuration to include the REI3-Tickets-MCP-Server.
 
 #### MCP-Server JSON configuration
 
@@ -61,7 +63,7 @@
 
 #### Creating a REI3 ticket using the REI3-Tickets-MCP-Server:
 
-<img width="1309" height="248" alt="grafik" src="https://github.com/user-attachments/assets/2dc69e13-e742-4376-8b29-821fa1ae298a" />
+<img width="1309" height="248" alt="Create_Ticket_with_MCP_Server" src="https://github.com/user-attachments/assets/2dc69e13-e742-4376-8b29-821fa1ae298a" />
 
 #### Created ticket:
 
@@ -71,9 +73,9 @@
 
 <img width="1876" height="806" alt="Created_Ticket_Worklog" src="https://github.com/user-attachments/assets/7f9baeab-8c46-44ad-8dce-0873d11ff3c2" />
 
-#### Creating a worklog entry inside a existing ticket:
+#### Creating a worklog entry inside an existing ticket:
 
-<img width="1320" height="398" alt="Creating_Ticket_Worklog_with_MCP_Server" src="https://github.com/user-attachments/assets/abec409e-ff49-4867-8404-0f41ee669065" />
+<img width="1320" height="398" alt="Create_Ticket_Worklog_with_MCP_Server" src="https://github.com/user-attachments/assets/abec409e-ff49-4867-8404-0f41ee669065" />
 
 #### Created ticket worklog:
 
