@@ -127,7 +127,7 @@ async def create_ticket(subject: str, description: str) -> str:
     :returns:
         A success message including the created ticket ID or an error message.
     """
-    bearer_token = _get_bearer_token()
+    bearer_token = await _get_bearer_token()
 
     url = f"{BASE_URL}{API_BASE_ENDPOINT}{CREATE_TICKET_EXTENSION}"
 
@@ -168,7 +168,7 @@ async def create_worklog(note: str, key: str) -> str:
     :returns:
         A success message including the created worklog ID or an error message.
     """
-    bearer_token = _get_bearer_token()
+    bearer_token = await _get_bearer_token()
 
     url = f"{BASE_URL}{API_BASE_ENDPOINT}{CREATE_WORKLOG_EXTENSION}"
 
