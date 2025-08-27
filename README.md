@@ -35,7 +35,7 @@
 
 5. Set up an API Profile in your REI3 tickets instance. <br> You can create one under: Tickets > Admin Tab > API profiles 
 
-6. Download/Clone and extract this repository and adjust the .env file variables.
+6. Download/Clone and extract this repository and adjust the config.ini file variables.
 
 7. Ensure you have an MCP Client with the capability to run MCP tools at your disposal. <br> I used [AnythingLLM](https://anythingllm.com/)
 
