@@ -41,7 +41,7 @@
 
 8. Configure the MCP-Server JSON configuration to include the REI3-Tickets-MCP-Server.
 
-#### MCP-Server JSON configuration
+#### MCP-Server JSON configuration examples for AnythingLLM:
 
 ```json
 {
@@ -54,6 +54,17 @@
 			"run",
 			"rei3_tickets_mcp_server.py"
 		]
+	}
+  }
+}
+```
+
+```json
+{
+  "mcpServers": {
+	"REI3-Tickets-MCP-Server" : {
+		"url": "http://127.0.0.1:4321/mcp",
+		"type": "streamable"
 	}
   }
 }
