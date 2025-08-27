@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" project-jdk-name="uv (REI3 Tickets MCP-Server)" project-jdk-type="Python SDK" />
+  <component name="Black">
+    <option name="sdkName" value="Python 3.13 (REI3 Tickets MCP-Server)" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (REI3 Tickets MCP-Server)" project-jdk-type="Python SDK" />
 </project>
