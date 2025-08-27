@@ -43,6 +43,8 @@
 
 #### MCP-Server JSON configuration examples for AnythingLLM:
 
+For transport mode 'stdio':
+
 ```json
 {
   "mcpServers": {
@@ -58,6 +60,8 @@
   }
 }
 ```
+
+For transport mode 'http':
 
 ```json
 {
