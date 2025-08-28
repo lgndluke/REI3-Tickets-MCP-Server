@@ -2,7 +2,7 @@ import configparser
 import httpx
 
 from pathlib import Path
-from src.format import format_ticket_key
+from src.common.formatter import format_ticket_key
 from typing import Any
 
 # ----------------------------
@@ -111,8 +111,8 @@ async def close_ticket(key: str) -> str:
         try:
             response = await client.post(url, headers=headers, json=payload)
             response.raise_for_status()
-            ticket_id = response.json()["0"]
-            return f"Ticket #{ticket_id} was successfully closed."
+            # TODO
+            return ""
         except httpx.HTTPStatusError as e:
             return f"Failed to close ticket: {e.response.text if e.response else 'Unknown Error'}"
 
@@ -237,14 +237,14 @@ async def get_public_worklogs_by_ticket_key(key: str) -> str:
 
 async def get_ticket_info_by_key(key: str) -> str:
     """
-        Fetches all ticket information of a ticket specified by its ticket key.
+    Fetches all ticket information of a ticket specified by its ticket key.
 
-        Args:
-            key: The ticket key. (e.g.: '000015')
+    Args:
+        key: The ticket key. (e.g.: '000015')
 
-        :returns:
-            The fetched ticket information or an error message.
-        """
+    :returns:
+        The fetched ticket information or an error message.
+    """
     bearer_token = await _get_bearer_token()
 
     url = f"{BASE_URL}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
