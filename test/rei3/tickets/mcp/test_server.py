@@ -1,4 +1,4 @@
-from src.rei3_tickets_mcp_server import *
+from src.rei3.tickets.mcp.server import *
 
 # ----------------------------
 # Tests
