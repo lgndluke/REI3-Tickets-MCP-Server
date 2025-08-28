@@ -1,14 +1,4 @@
-import configparser
-
-from pathlib import Path
-
-# ----------------------------
-# Load configuration file
-# ----------------------------
-
-config = configparser.ConfigParser()
-path   = Path(__file__).resolve().parents[2] / "config.ini"
-config.read(path)
+from .config_handler import get_config_value
 
 # ----------------------------
 # Functions
@@ -25,7 +15,7 @@ def format_ticket_key(key: str) -> str:
         The formatted ticket key or the unformatted key on error. (e.g.: '000015' or '15')
     """
     try:
-        key_to_format = config.get("rei3-tickets-api", "key_format", fallback="{key:06d}")
+        key_to_format = get_config_value("rei3-tickets-api", "key_format", fallback="{key:06d}")
         return key_to_format.format(key=int(key))
     except (ValueError, KeyError):
         return key
