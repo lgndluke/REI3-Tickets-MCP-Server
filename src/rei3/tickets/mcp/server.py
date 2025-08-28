@@ -17,6 +17,10 @@ class REI3TicketsMCPServer:
     def __init__(self):
         self.FastMCP   = FastMCP(name="REI3 Tickets MCP Server", host="0.0.0.0", port=8080)
 
+        # ----------------------------
+        # Register MCP Server tools.
+        # ----------------------------
+
         @self.FastMCP.tool()
         async def close_ticket(key: str) -> str:
             """
@@ -29,10 +33,6 @@ class REI3TicketsMCPServer:
                 A success message including the closed ticket ID or an error message.
             """
             return await tickets_api.close_ticket(key=key)
-
-        # ----------------------------
-        # Register MCP Server tools.
-        # ----------------------------
 
         @self.FastMCP.tool()
         async def create_ticket(subject: str, description: str) -> str:
