@@ -1,8 +1,5 @@
-import configparser
-
 from flask import Flask, jsonify, request
-from pathlib import Path
-from src.tickets_api_requests import *
+from src.rei3.tickets.api.requests import *
 from urllib.parse import urlparse
 
 # ----------------------------
