@@ -10,7 +10,7 @@ from typing import Any
 # ----------------------------
 
 config = configparser.ConfigParser()
-path   = Path(__file__).resolve().parent.parent / "config.ini"
+path   = Path(__file__).resolve().parents[4] / "config.ini"
 config.read(path)
 
 # ----------------------------
