@@ -1,4 +1,3 @@
-
 <h1 align="center">
   <br>
   <a href="https://github.com/lgndluke/REI3-Tickets-MCP-Server"><img width="200" alt="REI3_MCP_Server_Logo" src="https://github.com/user-attachments/assets/dfac4e23-ddeb-4fdd-a1fe-8af413fb2c60" /></a>
@@ -11,6 +10,7 @@
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
+  <a href="#roadmap">Roadmap</a> •
   <a href="#installation">Installation</a> •
   <a href="#demonstration">Demonstration</a> •
   <a href="#credits">Credits</a>
@@ -20,6 +20,14 @@
 
 * Create tickets.
 * Create ticket worklog entries.
+
+## Roadmap
+
+- Close ticket by ticket key functionality.
+- Get context by ticket key functionality.
+- Get ticket info by ticket key functionality.
+- Management Web-Interface.
+- Docker Container for simpler deployment.
 
 ## Installation
 
@@ -67,7 +75,7 @@ For transport mode 'http':
 {
   "mcpServers": {
 	"REI3-Tickets-MCP-Server" : {
-		"url": "http://127.0.0.1:4321/mcp",
+		"url": "http://127.0.0.1:54321/mcp",
 		"type": "streamable"
 	}
   }
