@@ -1,4 +1,4 @@
-import src.tickets_api_requests as tickets_api
+import src.rei3.tickets.api.requests as tickets_api
 
 from mcp.server.fastmcp import FastMCP
 
