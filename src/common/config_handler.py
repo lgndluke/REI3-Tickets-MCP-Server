@@ -14,7 +14,7 @@ config.read(path)
 # Functions
 # ----------------------------
 
-def get_config_value(section: str, key: str, fallback: str) -> str:
+def get_config_value(section: str, key: str, fallback='') -> str:
     return config.get(section, key, fallback=fallback)
 
 def set_config_value(section: str, key: str, value: str) -> None:
