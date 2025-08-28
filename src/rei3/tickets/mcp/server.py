@@ -15,7 +15,7 @@ class REI3TicketsMCPServer:
     # Initialize MCP Server
     # ----------------------------
     def __init__(self):
-        self.FastMCP   = FastMCP(name="REI3 Tickets MCP Server", host="0.0.0.0", port=8080)
+        self.FastMCP   = FastMCP(name="REI3 Tickets MCP Server")
 
         # ----------------------------
         # Register MCP Server tools.
