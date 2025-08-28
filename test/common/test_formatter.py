@@ -1,4 +1,4 @@
-from src.format import *
+from src.common.formatter import *
 
 # ----------------------------
 # Tests
