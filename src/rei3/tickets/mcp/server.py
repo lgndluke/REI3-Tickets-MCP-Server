@@ -27,7 +27,7 @@ class REI3TicketsMCPServer:
             Close a ticket specified by its ticket key inside the REI3 Tickets application.
 
             Args:
-                key: The ticket key. (e.g.: '000015')
+                key: The ticket key. (e.g.: '15')
 
             :returns:
                 A success message including the closed ticket ID or an error message.
@@ -55,7 +55,7 @@ class REI3TicketsMCPServer:
 
             Args:
                 note: The content or note to include in the worklog.
-                key:  The ticket key. (e.g.: '000015')
+                key:  The ticket key. (e.g.: '15')
 
             :returns:
                 A success message including the created worklog ID or an error message.
@@ -68,7 +68,7 @@ class REI3TicketsMCPServer:
             Fetch all public worklogs of a specific ticket by its key value.
 
             Args:
-                key:  The ticket key. (e.g.: '000015')
+                key:  The ticket key. (e.g.: '15')
 
             :returns:
                 A success message including X or an error message.
@@ -81,7 +81,7 @@ class REI3TicketsMCPServer:
             Fetch ticket information of a specific ticket by its key value.
 
             Args:
-                key:  The ticket key. (e.g.: '000015')
+                key:  The ticket key. (e.g.: '15')
 
             :returns:
                 A success message including X or an error message.
