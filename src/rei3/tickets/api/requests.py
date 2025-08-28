@@ -1,17 +1,8 @@
-import configparser
 import httpx
 
-from pathlib import Path
+from src.common.config_handler import get_config_value
 from src.common.formatter import format_ticket_key
 from typing import Any
-
-# ----------------------------
-# Load configuration file
-# ----------------------------
-
-config = configparser.ConfigParser()
-path   = Path(__file__).resolve().parents[4] / "config.ini"
-config.read(path)
 
 # ----------------------------
 # Constants
@@ -19,7 +10,7 @@ config.read(path)
 
 USER_AGENT = "rei3-tickets-mcp-server/1.0"
 
-BASE_URL          = config.get('rei3-tickets-api', 'base_url')
+BASE_URL          = get_config_value('rei3-tickets-api', 'base_url')
 API_AUTH_ENDPOINT = "/api/auth"
 API_BASE_ENDPOINT = "/api/lsw_tickets"
 
@@ -29,10 +20,10 @@ CREATE_WORKLOG_EXTENSION      = "/create_worklog/v1"
 GET_WORKLOGS_BY_KEY_EXTENSION = "/get_public_worklogs_by_ticket_key/v1"
 GET_TICKET_INFO_EXTENSION     = "/get_ticket_info_by_key/v1"
 
-TICKETS_API_USERNAME   = config.get('rei3-tickets-api', 'username')
-TICKETS_API_PASSWORD   = config.get('rei3-tickets-api', 'password')
-TICKETS_API_EMAIL      = config.get('rei3-tickets-api', 'email')
-TICKETS_API_PROFILE_ID = config.get('rei3-tickets-api', 'profile')
+TICKETS_API_USERNAME   = get_config_value('rei3-tickets-api', 'username')
+TICKETS_API_PASSWORD   = get_config_value('rei3-tickets-api', 'password')
+TICKETS_API_EMAIL      = get_config_value('rei3-tickets-api', 'email')
+TICKETS_API_PROFILE_ID = get_config_value('rei3-tickets-api', 'profile')
 
 # ----------------------------
 # Private Functions
