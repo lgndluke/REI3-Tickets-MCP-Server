@@ -3,18 +3,10 @@ from src.rei3.tickets.api.requests import *
 from urllib.parse import urlparse
 
 # ----------------------------
-# Load configuration file
-# ----------------------------
-
-config = configparser.ConfigParser()
-path   = Path(__file__).resolve().parent.parent / "config.ini"
-config.read(path)
-
-# ----------------------------
 # Constants
 # ----------------------------
 
-BASE_URL          = config.get('rei3-tickets-api', 'base_url')
+BASE_URL          = get_config_value('rei3-tickets-api', 'base_url')
 
 BASE_URL_HOST     = urlparse(BASE_URL).hostname
 BASE_URL_PORT     = urlparse(BASE_URL).port
