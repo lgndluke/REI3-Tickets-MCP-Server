@@ -19,7 +19,7 @@ class TicketsMCPServerConfigAdmin(admin.ModelAdmin):
         """
         config = TicketsMCPServerConfig.load()
         return HttpResponseRedirect(
-            reverse('admin:mcpapp_ticketsmcpserverconfig_change', args=[config.pk])
+            reverse('admin:mcp_app_ticketsmcpserverconfig_change', args=[config.pk])
         )
 
     def get_urls(self):
@@ -31,7 +31,7 @@ class TicketsMCPServerConfigAdmin(admin.ModelAdmin):
             path(
                 "",
                 self.changelist_view,
-                name="mcpapp_ticketsmcpserverconfig_change"
+                name="mcp_app_ticketsmcpserverconfig_change"
             )
         ]
         return custom_urls + urls
