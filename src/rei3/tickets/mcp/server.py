@@ -1,6 +1,6 @@
 import src.rei3.tickets.api.requests as tickets_api
 
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 
 # ----------------------------
 # Class definition
