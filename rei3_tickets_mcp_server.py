@@ -2,6 +2,7 @@ import asyncio
 import signal
 import threading
 
+from fastmcp import settings
 from src.common.config_handler import get_config_value
 from src.rei3.tickets.mcp.server import REI3TicketsMCPServer
 
@@ -55,8 +56,8 @@ async def main():
         tasks.append(asyncio.create_task(_run_mcp_server(tickets_mcp, 'stdio')))
 
     if mcp_transport == 'http' and web_enable.lower() == 'false':
-        tickets_mcp.get_fastmcp().settings.host = host
-        tickets_mcp.get_fastmcp().settings.port = port
+        settings.host = host
+        settings.port = port
         tasks.append(asyncio.create_task(_run_mcp_server(tickets_mcp, 'streamable-http')))
 
     if mcp_transport == 'stdio' and web_enable.lower() == 'true':
