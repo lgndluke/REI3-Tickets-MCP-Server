@@ -32,3 +32,10 @@ def save_config() -> None:
     """
     with open(path, 'w') as config_file:
         config.write(config_file)
+
+def reload_config() -> None:
+    """
+    Force reload of config.ini values into memory.
+    """
+    global config
+    config.read(path)
