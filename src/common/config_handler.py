@@ -1,12 +1,11 @@
-import configparser
-
+from configupdater import ConfigUpdater
 from pathlib import Path
 
 # ----------------------------
 # Load configuration file
 # ----------------------------
 
-config = configparser.ConfigParser()
+config = ConfigUpdater()
 path   = Path(__file__).resolve().parents[2] / "config.ini"
 config.read(path)
 
@@ -18,7 +17,7 @@ def get_config_value(section: str, key: str, fallback='') -> str:
     """
     Returns a configuration value from the given section and key.
     """
-    return config.get(section, key, fallback=fallback)
+    return config.get(section, key, fallback=fallback).value
 
 def set_config_value(section: str, key: str, value: str) -> None:
     """
