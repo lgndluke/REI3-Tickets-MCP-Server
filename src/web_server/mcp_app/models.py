@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from src.common.config_handler import get_config_value, set_config_value, save_config, reload_config
 
 class TicketsMCPServerConfig(models.Model):
 
@@ -68,28 +69,61 @@ class TicketsMCPServerConfig(models.Model):
         """
         if not self.pk and TicketsMCPServerConfig.objects.exists():
             raise ValidationError('Only one Tickets MCP Server Configuration is allowed.')
-        return super().save(*args, **kwargs)
+
+        # Persist changes to database first.
+        super().save(*args, **kwargs)
+
+        # Sync changes to config.ini file.
+        set_config_value('general', 'host', str(self.host))
+        set_config_value('general', 'port', str(self.port))
+        set_config_value('mcp-server', 'transport', str(self.transport))
+        set_config_value('web-server', 'enable', str(self.enable).lower())
+        set_config_value('rei3-tickets-api', 'username', str(self.username))
+        set_config_value('rei3-tickets-api', 'password', str(self.password))
+        set_config_value('rei3-tickets-api', 'email', str(self.email))
+        set_config_value('rei3-tickets-api', 'profile', str(self.profile))
+        set_config_value('rei3-tickets-api', 'key_format', str(self.key_format))
+        set_config_value('rei3-tickets-api', 'base_url', str(self.base_url))
+        save_config()
 
     @classmethod
     def load(cls):
         """
-        Get the configuration instance, or create a default one.
+        Always sync the configuration from config.ini to the database.
+        - If no DB entry exists -> create it from config.ini.
+        - If DB entry exists but differs -> update DB values with config.ini.
+        - Always return the up-to-date DB entry.
         """
-        obj, created = cls.objects.get_or_create(
-            pk=1,
-            defaults={
-                'host': '127.0.0.1',
-                'port': 54321,
-                'transport': 'http',
-                'enable': True,
-                'username': 'admin',
-                'password': 'admin',
-                'email': 'tickets-mcp-server@mcp.local',
-                'profile': 1,
-                'key_format': '{key:06d}',
-                'base_url': 'http://localhost:21918',
-            }
-        )
+
+        reload_config()
+
+        # Read config.ini file values.
+        config_values = {
+            'host': get_config_value('general', 'host'),
+            'port': get_config_value('general', 'port'),
+            'transport': get_config_value('mcp-server', 'transport'),
+            'enable': True if get_config_value('web-server', 'enable').lower() == 'true' else False,
+            'username': get_config_value('rei3-tickets-api', 'username'),
+            'password': get_config_value('rei3-tickets-api', 'password'),
+            'email': get_config_value('rei3-tickets-api', 'email'),
+            'profile': int(get_config_value('rei3-tickets-api', 'profile')),
+            'key_format': get_config_value('rei3-tickets-api', 'key_format'),
+            'base_url': get_config_value('rei3-tickets-api', 'base_url'),
+        }
+
+        # Fetch singleton instance.
+        obj, created = cls.objects.get_or_create(pk=1, defaults=config_values)
+
+        if not created:
+            # Compare DB with config.ini and update if different.
+            updated = False
+            for field, value in config_values.items():
+                if getattr(obj, field) != value:
+                    setattr(obj, field, value)
+                    updated = True
+            if updated:
+                obj.save_base(update_fields=config_values.keys())
+
         return obj
 
     def __str__(self):
