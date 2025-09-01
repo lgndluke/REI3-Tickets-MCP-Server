@@ -74,10 +74,10 @@ class TicketsMCPServerConfig(models.Model):
         super().save(*args, **kwargs)
 
         # Sync changes to config.ini file.
-        set_config_value('general', 'host', str(self.host))
-        set_config_value('general', 'port', str(self.port))
-        set_config_value('mcp-server', 'transport', str(self.transport))
-        set_config_value('web-server', 'enable', str(self.enable).lower())
+        #set_config_value('general', 'host', str(self.host))
+        #set_config_value('general', 'port', str(self.port))
+        #set_config_value('mcp-server', 'transport', str(self.transport))
+        #set_config_value('web-server', 'enable', str(self.enable).lower())
         set_config_value('rei3-tickets-api', 'username', str(self.username))
         set_config_value('rei3-tickets-api', 'password', str(self.password))
         set_config_value('rei3-tickets-api', 'email', str(self.email))

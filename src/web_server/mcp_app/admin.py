@@ -7,6 +7,24 @@ from .models import TicketsMCPServerConfig
 @admin.register(TicketsMCPServerConfig)
 class TicketsMCPServerConfigAdmin(admin.ModelAdmin):
 
+    readonly_fields = ['host', 'port', 'transport', 'enable']
+    fields = ('host', 'port', 'transport', 'enable', 'username', 'password', 'email', 'profile', 'key_format', 'base_url')
+
+    fieldsets = (
+        ('General', {
+            'fields': ('host', 'port'),
+        }),
+        ('MCP Server', {
+            'fields': ('transport',),
+        }),
+        ('Web Server', {
+            'fields': ('enable',),
+        }),
+        ('REI3 Tickets API', {
+            'fields': ('username', 'password', 'email', 'profile', 'key_format', 'base_url'),
+        }),
+    )
+
     def has_add_permission(self, request):
         """
         Prevent adding more than one config via the admin interface.
@@ -43,3 +61,6 @@ class TicketsMCPServerConfigAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['title'] = "Edit MCP Server Configuration"
         return super().changeform_view(request, object_id, form_url, extra_context=extra_context)
+
+    def get_readonly_fields(self, request, obj=None):
+        return self.readonly_fields
