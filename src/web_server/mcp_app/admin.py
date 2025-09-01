@@ -8,7 +8,6 @@ from .models import TicketsMCPServerConfig
 class TicketsMCPServerConfigAdmin(admin.ModelAdmin):
 
     readonly_fields = ['host', 'port', 'transport', 'enable']
-    fields = ('host', 'port', 'transport', 'enable', 'username', 'password', 'email', 'profile', 'key_format', 'base_url')
 
     fieldsets = (
         ('General', {
