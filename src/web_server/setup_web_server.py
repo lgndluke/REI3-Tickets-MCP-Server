@@ -3,7 +3,6 @@ import os
 import secrets
 import subprocess
 
-from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
 from pathlib import Path
 
@@ -20,7 +19,7 @@ async def setup_web_server() -> None:
     if not setup_file.exists():
 
         # Create .env file with DJANGO_SECRET inside 'web_server/main'.
-        main_path = Path(__file__).resolve() / 'main'
+        main_path = Path(__file__).resolve().parent / 'main'
         os.chdir(main_path)
 
         django_secret = secrets.token_urlsafe(64)
@@ -48,3 +47,6 @@ async def setup_web_server() -> None:
 
         # Create static files.
         subprocess.check_call('python manage.py collectstatic --noinput', shell=True)
+
+        # Create setup file.
+        setup_file.touch()
