@@ -26,8 +26,6 @@
 - Close ticket by ticket key functionality.
 - Get context by ticket key functionality.
 - Get ticket info by ticket key functionality.
-- Management Web-Interface.
-- Docker Container for simpler deployment.
 
 ## Installation
 
