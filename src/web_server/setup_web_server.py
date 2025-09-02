@@ -1,3 +1,4 @@
+import django
 import os
 import secrets
 import subprocess
@@ -5,6 +6,10 @@ import subprocess
 from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
 from pathlib import Path
+
+# Configure Django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.web_server.main.settings")
+django.setup()
 
 @sync_to_async
 def check_if_user_exists():
@@ -23,7 +28,7 @@ async def setup_web_server() -> None:
 
         django_secret = secrets.token_urlsafe(64)
 
-        with open('.env', 'r') as env:
+        with open('.env', 'w') as env:
             env.write(f"DJANGO_SECRET='{django_secret}'")
 
         # Change to root project directory.
@@ -41,7 +46,7 @@ async def setup_web_server() -> None:
 
         # Set django-admin user password.
         user = get_user_model().objects.get(username='admin')
-        user.setpassword('admin')
+        user.set_password('admin')
         user.save()
 
         # Create static files.
