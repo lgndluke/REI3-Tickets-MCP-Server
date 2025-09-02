@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOST_STRINGS.split(',')]
 
 # SSL settings
 SECURE_SSL_REDIRECT = True if get_config_value('web-server', 'secure_ssl_redirect').lower() == 'true' else False
-SECURE_HSTS_SECONDS = get_config_value('web-server', 'secure_hsts_seconds')
+SECURE_HSTS_SECONDS = int(get_config_value('web-server', 'secure_hsts_seconds'))
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True if get_config_value('web-server', 'secure_hsts_include_subdomains').lower() == 'true' else False
 SECURE_HSTS_PRELOAD = True if get_config_value('web-server', 'secure_hsts_preload').lower() == 'true' else False
 SESSION_COOKIE_SECURE = True if get_config_value('web-server', 'session_cookie_secure').lower() == 'true' else False
