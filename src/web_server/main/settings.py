@@ -14,6 +14,7 @@ import dotenv
 import os
 
 from pathlib import Path
+from src.common.config_handler import get_config_value
 
 # Load .env file.
 dotenv.load_dotenv()
@@ -31,7 +32,8 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOST_STRINGS = get_config_value('web-server', 'allowed_hosts')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOST_STRINGS.split(',')]
 
 
 # Application definition
