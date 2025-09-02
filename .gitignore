@@ -16,3 +16,5 @@ wheels/
 src/web_server/main/.env
 src/web_server/static
 src/web_server/db.sqlite3
+src/web_server/.initialized
+src/web_server/mcp_app/migrations
