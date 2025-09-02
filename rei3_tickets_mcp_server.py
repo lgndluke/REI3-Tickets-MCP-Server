@@ -40,7 +40,7 @@ async def _run_mcp_server(server: REI3TicketsMCPServer, transport: str):
 
 async def main():
 
-    tickets_mcp   = REI3TicketsMCPServer()
+    tickets_mcp   = None
 
     # [general] values.
     host          = get_config_value('general', 'host', fallback='localhost')
@@ -55,11 +55,13 @@ async def main():
     tasks = []
 
     if mcp_transport == 'stdio' and web_enable.lower() == 'false':
+        tickets_mcp = REI3TicketsMCPServer()
         tasks.append(asyncio.create_task(_run_mcp_server(tickets_mcp, 'stdio')))
 
     if mcp_transport == 'http' and web_enable.lower() == 'false':
         settings.host = host
         settings.port = port
+        tickets_mcp = REI3TicketsMCPServer()
         tasks.append(asyncio.create_task(_run_mcp_server(tickets_mcp, 'streamable-http')))
 
     if mcp_transport == 'stdio' and web_enable.lower() == 'true':
@@ -89,7 +91,10 @@ async def main():
             # Windows does not support SIGTERM
             pass
 
-    await stop_event.wait()
+    try:
+        await stop_event.wait()
+    except asyncio.CancelledError:
+        print('REI3 Tickets MCP server has been shutdown.')
 
     for task in tasks:
         task.cancel()
