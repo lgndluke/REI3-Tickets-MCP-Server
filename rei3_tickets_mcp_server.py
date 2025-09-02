@@ -5,6 +5,8 @@ import threading
 from fastmcp import settings
 from src.common.config_handler import get_config_value
 from src.rei3.tickets.mcp.server import REI3TicketsMCPServer
+from src.web_server.setup_web_server import setup_web_server
+from uvicorn.main import Config, Server
 
 # ----------------------------
 # Private functions
@@ -61,12 +63,13 @@ async def main():
         tasks.append(asyncio.create_task(_run_mcp_server(tickets_mcp, 'streamable-http')))
 
     if mcp_transport == 'stdio' and web_enable.lower() == 'true':
-        """TODO Think about if it makes sense to startup a django web-server for 'stdio' MCP server management."""
-        print('Coming soon, please disable the "enable" key inside the "web-server" section.')
+        print('The web-server does not support "stdio" transport. Please either change transport or disable the web-server.')
 
     if mcp_transport == 'http' and web_enable.lower() == 'true':
-        """TODO startup django web-server with fastapi mcp server endpoint."""
-        print('Coming soon, please disable the "enable" key inside the "web-server" section.')
+        await setup_web_server()
+        config = Config('src.web_server.main.asgi:application', host=host, port=port, loop='asyncio')
+        server = Server(config)
+        tasks.append(asyncio.create_task(server.serve()))
 
     if not tasks:
         print("No server configured to run.")
