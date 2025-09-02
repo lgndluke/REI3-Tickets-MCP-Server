@@ -35,6 +35,13 @@ DEBUG = False
 ALLOWED_HOST_STRINGS = get_config_value('web-server', 'allowed_hosts')
 ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOST_STRINGS.split(',')]
 
+# SSL settings
+SECURE_SSL_REDIRECT = get_config_value('web-server', 'secure_ssl_redirect')
+SECURE_HSTS_SECONDS = get_config_value('web-server', 'secure_hsts_seconds')
+SECURE_HSTS_INCLUDE_SUBDOMAINS = get_config_value('web-server', 'secure_hsts_include_subdomains')
+SECURE_HSTS_PRELOAD = get_config_value('web-server', 'secure_hsts_preload')
+SESSION_COOKIE_SECURE = get_config_value('web-server', 'session_cookie_secure')
+CSRF_COOKIE_SECURE = get_config_value('web-server', 'csrf_cookie_secure')
 
 # Application definition
 
