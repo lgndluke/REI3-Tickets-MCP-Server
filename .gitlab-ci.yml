@@ -10,7 +10,4 @@ test:
     - uv sync
     - source .venv/bin/activate
   script: pytest -q test/**/test_*.py
-  artifacts:
-    paths:
-      - results.xml
   allow_failure: false
