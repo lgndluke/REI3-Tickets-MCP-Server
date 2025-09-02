@@ -31,7 +31,7 @@
 
 ## Installation
 
-#### Installation instructions
+#### Installation instructions (manual)
 
 1. Install [Python 3.13.5](https://www.python.org/downloads/release/python-3135/).
 
@@ -48,6 +48,20 @@
 7. Ensure you have an MCP Client with the capability to run MCP tools at your disposal. <br> I used [AnythingLLM](https://anythingllm.com/)
 
 8. Configure the MCP-Server JSON configuration to include the REI3-Tickets-MCP-Server.
+
+#### Installation instruction (docker)
+
+1. Install [docker](https://www.docker.com/).
+
+2. Install [git](https://git-scm.com/downloads).
+
+3. Create a designated user in REI3 with access to the Tickets API role. <br> This user will be used for authentication.
+
+4. Set up an API Profile in your REI3 tickets instance. <br> You can create one under: Tickets > Admin Tab > API profiles.
+
+5. Download/Clone and extract this repository and adjust the config.ini file variables.
+
+6. Run the ```setup_docker.ps1``` script, it will create the docker image for you, as well as provide instructions on how to create the container.
 
 #### MCP-Server JSON configuration examples for AnythingLLM:
 
@@ -75,7 +89,7 @@ For transport mode 'http':
 {
   "mcpServers": {
 	"REI3-Tickets-MCP-Server" : {
-		"url": "http://127.0.0.1:54321/mcp",
+		"url": "http://127.0.0.1:54321/mcp/",
 		"type": "streamable"
 	}
   }
