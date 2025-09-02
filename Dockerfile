@@ -31,4 +31,4 @@ ENV PATH='/app/.venv/bin:$PATH'
 ENTRYPOINT []
 
 # RUN the application.
-CMD ["uv", "run", ".\rei3_tickets_mcp_server.py"]
+CMD ["python", "./rei3_tickets_mcp_server.py"]
