@@ -15,7 +15,7 @@ async def setup_web_server() -> None:
     Function to set up the initial web-server configuration.
     """
 
-    if not check_if_user_exists():
+    if not await check_if_user_exists():
 
         # Create .env file with DJANGO_SECRET inside 'web_server/main'.
         main_path = Path(__file__).resolve() / 'main'
