@@ -8,7 +8,8 @@ test:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
     - source $HOME/.local/bin/env
     - uv sync
-  script: pytest test/**/test_*.py
+    - source .venv/bin/activate
+  script: pytest -q test/**/test_*.py
   artifacts:
     paths:
       - results.xml
