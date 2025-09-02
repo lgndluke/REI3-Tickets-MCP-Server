@@ -11,16 +11,13 @@ from pathlib import Path
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.web_server.main.settings")
 django.setup()
 
-@sync_to_async
-def check_if_user_exists():
-    return get_user_model().objects.exists()
-
 async def setup_web_server() -> None:
     """
     Function to set up the initial web-server configuration.
     """
 
-    if not await check_if_user_exists():
+    setup_file = Path(__file__).resolve().parent / ".initialized"
+    if not setup_file.exists():
 
         # Create .env file with DJANGO_SECRET inside 'web_server/main'.
         main_path = Path(__file__).resolve() / 'main'
