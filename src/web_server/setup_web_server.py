@@ -7,10 +7,6 @@ from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
 from pathlib import Path
 
-# Configure Django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.web_server.main.settings")
-django.setup()
-
 @sync_to_async
 def _set_default_admin_password():
     # Set django-admin user password.
@@ -35,6 +31,10 @@ async def setup_web_server() -> None:
         with open('.env', 'w') as env:
             env.write(f"DJANGO_SECRET='{django_secret}'")
 
+        # Configure Django
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.web_server.main.settings")
+        django.setup()
+
         # Change to root project directory.
         root_path = Path(__file__).resolve().parents[2]
         os.chdir(root_path)
@@ -49,7 +49,7 @@ async def setup_web_server() -> None:
         subprocess.check_call('python manage.py createsuperuser --noinput --username admin --email admin@tickets.local', shell=True)
 
         # Set django-admin password.
-        _set_default_admin_password()
+        await _set_default_admin_password()
 
         # Create static files.
         subprocess.check_call('python manage.py collectstatic --noinput', shell=True)
