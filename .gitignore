@@ -18,3 +18,4 @@ src/web_server/static
 src/web_server/db.sqlite3
 src/web_server/.initialized
 src/web_server/mcp_app/migrations
+src/web_server/mcp_app/fixtures
