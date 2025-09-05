@@ -93,6 +93,7 @@ class TicketsMCPServerConfig(models.Model):
             'allowed_hosts': get_config_value('web-server', 'allowed_hosts'),
             'secure_ssl_redirect': True if get_config_value('web-server', 'secure_ssl_redirect').lower() == 'true' else False,
             'secure_hsts_seconds': int(get_config_value('web-server', 'secure_hsts_seconds')),
+            'secure_hsts_include_subdomains': True if get_config_value('web-server', 'secure_hsts_include_subdomains').lower() == 'true' else False,
             'secure_hsts_preload': True if get_config_value('web-server', 'secure_hsts_preload').lower() == 'true' else False,
             'session_cookie_secure': True if get_config_value('web-server', 'session_cookie_secure').lower() == 'true' else False,
             'csrf_cookie_secure': True if get_config_value('web-server', 'csrf_cookie_secure').lower() == 'true' else False,
