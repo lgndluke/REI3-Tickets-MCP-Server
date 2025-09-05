@@ -5,30 +5,21 @@ from src.common.config_handler import get_config_value, set_config_value, save_c
 class TicketsMCPServerConfig(models.Model):
 
     # [general] section.
-    host = models.GenericIPAddressField(
-        default='127.0.0.1',
-    )
-
-    port = models.PositiveIntegerField(
-        default=54321
-    )
+    host = models.TextField()
+    port = models.PositiveIntegerField()
 
     # [mcp-server] section.
-    TRANSPORT_CHOICES = (
-        ('http', 'http'),
-        ('stdio', 'stdio'),
-    )
-
-    transport = models.CharField(
-        max_length=10,
-        choices=TRANSPORT_CHOICES,
-        default='http',
-    )
+    transport = models.TextField()
 
     # [web-server] section.
-    enable = models.BooleanField(
-        default=True,
-    )
+    enable = models.BooleanField()
+    allowed_hosts = models.TextField()
+    secure_ssl_redirect = models.BooleanField()
+    secure_hsts_seconds = models.PositiveIntegerField()
+    secure_hsts_include_subdomains = models.BooleanField()
+    secure_hsts_preload = models.BooleanField()
+    session_cookie_secure = models.BooleanField()
+    csrf_cookie_secure = models.BooleanField()
 
     # [rei3-tickets-api] section.
     username = models.CharField(
@@ -74,10 +65,6 @@ class TicketsMCPServerConfig(models.Model):
         super().save(*args, **kwargs)
 
         # Sync changes to config.ini file.
-        #set_config_value('general', 'host', str(self.host))
-        #set_config_value('general', 'port', str(self.port))
-        #set_config_value('mcp-server', 'transport', str(self.transport))
-        #set_config_value('web-server', 'enable', str(self.enable).lower())
         set_config_value('rei3-tickets-api', 'username', str(self.username))
         set_config_value('rei3-tickets-api', 'password', str(self.password))
         set_config_value('rei3-tickets-api', 'email', str(self.email))
@@ -100,9 +87,15 @@ class TicketsMCPServerConfig(models.Model):
         # Read config.ini file values.
         config_values = {
             'host': get_config_value('general', 'host'),
-            'port': get_config_value('general', 'port'),
+            'port': int(get_config_value('general', 'port')),
             'transport': get_config_value('mcp-server', 'transport'),
             'enable': True if get_config_value('web-server', 'enable').lower() == 'true' else False,
+            'allowed_hosts': get_config_value('web-server', 'allowed_hosts'),
+            'secure_ssl_redirect': True if get_config_value('web-server', 'secure_ssl_redirect').lower() == 'true' else False,
+            'secure_hsts_seconds': int(get_config_value('web-server', 'secure_hsts_seconds')),
+            'secure_hsts_preload': True if get_config_value('web-server', 'secure_hsts_preload').lower() == 'true' else False,
+            'session_cookie_secure': True if get_config_value('web-server', 'session_cookie_secure').lower() == 'true' else False,
+            'csrf_cookie_secure': True if get_config_value('web-server', 'csrf_cookie_secure').lower() == 'true' else False,
             'username': get_config_value('rei3-tickets-api', 'username'),
             'password': get_config_value('rei3-tickets-api', 'password'),
             'email': get_config_value('rei3-tickets-api', 'email'),
