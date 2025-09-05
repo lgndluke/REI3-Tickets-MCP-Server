@@ -7,7 +7,7 @@ from .models import TicketsMCPServerConfig
 @admin.register(TicketsMCPServerConfig)
 class TicketsMCPServerConfigAdmin(admin.ModelAdmin):
 
-    readonly_fields = ['host', 'port', 'transport', 'enable']
+    readonly_fields = ['host', 'port', 'transport', 'enable', 'allowed_hosts', 'secure_ssl_redirect', 'secure_hsts_seconds', 'secure_hsts_preload', 'session_cookie_secure', 'csrf_cookie_secure']
 
     fieldsets = (
         ('General', {
@@ -17,7 +17,7 @@ class TicketsMCPServerConfigAdmin(admin.ModelAdmin):
             'fields': ('transport',),
         }),
         ('Web Server', {
-            'fields': ('enable',),
+            'fields': ('enable', 'allowed_hosts', 'secure_ssl_redirect', 'secure_hsts_seconds', 'secure_hsts_preload', 'session_cookie_secure', 'csrf_cookie_secure',),
         }),
         ('REI3 Tickets API', {
             'fields': ('username', 'password', 'email', 'profile', 'key_format', 'base_url'),
