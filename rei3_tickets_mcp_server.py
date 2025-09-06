@@ -51,6 +51,8 @@ async def main():
 
     # [web-server] values.
     web_enable    = get_config_value('web-server', 'enable', fallback='true')
+    ssl_key_file  = get_config_value('web-server', 'ssl_key_file', fallback=None)
+    ssl_cert_file = get_config_value('web-server', 'ssl_cert_file', fallback=None)
 
     tasks = []
 
@@ -69,7 +71,7 @@ async def main():
 
     if mcp_transport == 'http' and web_enable.lower() == 'true':
         await setup_web_server()
-        config = Config('src.web_server.main.asgi:application', host=host, port=port, loop='asyncio')
+        config = Config('src.web_server.main.asgi:application', host=host, port=port, ssl_certfile=ssl_cert_file, ssl_keyfile=ssl_key_file, loop='asyncio')
         server = Server(config)
         tasks.append(asyncio.create_task(server.serve()))
 
