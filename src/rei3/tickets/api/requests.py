@@ -10,7 +10,6 @@ from typing import Any
 
 USER_AGENT = "rei3-tickets-mcp-server/1.0"
 
-BASE_URL          = get_config_value('rei3-tickets-api', 'base_url')
 API_AUTH_ENDPOINT = "/api/auth"
 API_BASE_ENDPOINT = "/api/lsw_tickets"
 
@@ -20,10 +19,24 @@ CREATE_WORKLOG_EXTENSION      = "/create_worklog/v1"
 GET_WORKLOGS_BY_KEY_EXTENSION = "/get_public_worklogs_by_ticket_key/v1"
 GET_TICKET_INFO_EXTENSION     = "/get_ticket_info_by_key/v1"
 
-TICKETS_API_USERNAME   = get_config_value('rei3-tickets-api', 'username')
-TICKETS_API_PASSWORD   = get_config_value('rei3-tickets-api', 'password')
-TICKETS_API_EMAIL      = get_config_value('rei3-tickets-api', 'email')
-TICKETS_API_PROFILE_ID = get_config_value('rei3-tickets-api', 'profile')
+# ----------------------------
+# Private Config Accessors
+# ----------------------------
+
+def _get_base_url() -> str:
+    return get_config_value('rei3-tickets-api', 'base_url')
+
+def _get_tickets_api_username() -> str:
+    return get_config_value('rei3-tickets-api', 'username')
+
+def _get_tickets_api_password() -> str:
+    return get_config_value('rei3-tickets-api', 'password')
+
+def _get_tickets_api_email() -> str:
+    return get_config_value('rei3-tickets-api', 'email')
+
+def _get_tickets_api_profile_id() -> str:
+    return get_config_value('rei3-tickets-api', 'profile')
 
 # ----------------------------
 # Private Functions
@@ -36,7 +49,7 @@ async def _tickets_api_auth() -> dict[str, Any] | None:
     :returns:
         A dictionary containing the bearer token if successful, otherwise None.
     """
-    url = f"{BASE_URL}{API_AUTH_ENDPOINT}"
+    url = f"{_get_base_url()}{API_AUTH_ENDPOINT}"
 
     headers = {
         "User-Agent": USER_AGENT,
@@ -44,8 +57,8 @@ async def _tickets_api_auth() -> dict[str, Any] | None:
     }
 
     payload = {
-        "username": TICKETS_API_USERNAME,
-        "password": TICKETS_API_PASSWORD,
+        "username": _get_tickets_api_username(),
+        "password": _get_tickets_api_password(),
     }
 
     async with httpx.AsyncClient(follow_redirects=True) as client:
@@ -86,7 +99,7 @@ async def close_ticket(key: str) -> str:
     """
     bearer_token = await _get_bearer_token()
 
-    url = f"{BASE_URL}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
+    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
 
     headers = {
         "User-Agent": USER_AGENT,
@@ -120,7 +133,7 @@ async def create_ticket(subject: str, description: str) -> str:
     """
     bearer_token = await _get_bearer_token()
 
-    url = f"{BASE_URL}{API_BASE_ENDPOINT}{CREATE_TICKET_EXTENSION}"
+    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CREATE_TICKET_EXTENSION}"
 
     headers = {
         "User-Agent": USER_AGENT,
@@ -132,10 +145,10 @@ async def create_ticket(subject: str, description: str) -> str:
         "0(ticket)": {
             "subject": subject,
             "description": description,
-            "api_requested_for": TICKETS_API_EMAIL
+            "api_requested_for": _get_tickets_api_email()
         },
         "2(api_profile)": {
-            "id": TICKETS_API_PROFILE_ID
+            "id": _get_tickets_api_profile_id()
         }
     }
 
@@ -161,7 +174,7 @@ async def create_worklog(note: str, key: str) -> str:
     """
     bearer_token = await _get_bearer_token()
 
-    url = f"{BASE_URL}{API_BASE_ENDPOINT}{CREATE_WORKLOG_EXTENSION}"
+    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CREATE_WORKLOG_EXTENSION}"
 
     formatted_key = format_ticket_key(key)
 
@@ -177,7 +190,7 @@ async def create_worklog(note: str, key: str) -> str:
             "is_api": True
         },
         "1(contact)": {
-            "email": TICKETS_API_EMAIL,
+            "email": _get_tickets_api_email(),
         },
         "2(ticket)": {
             "key": formatted_key,
@@ -205,7 +218,7 @@ async def get_public_worklogs_by_ticket_key(key: str) -> str:
     """
     bearer_token = await _get_bearer_token()
 
-    url = f"{BASE_URL}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
+    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
 
     headers = {
         "User-Agent": USER_AGENT,
@@ -238,7 +251,7 @@ async def get_ticket_info_by_key(key: str) -> str:
     """
     bearer_token = await _get_bearer_token()
 
-    url = f"{BASE_URL}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
+    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
 
     headers = {
         "User-Agent": USER_AGENT,
