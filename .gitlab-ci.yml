@@ -4,7 +4,6 @@ stages:
 
 test:
   stage: test
-  image: python:3.13.5-slim
   before_script:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
     - source $HOME/.local/bin/env
@@ -15,7 +14,6 @@ test:
 
 build:
   stage: build
-  image: python:3.13.5
   before_script:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
     - source $HOME/.local/bin/env
@@ -36,7 +34,7 @@ build:
       --collect-all sqlparse \
       --collect-all dotenv \
       --icon './REI3-Tickets-MCP-Server-Logo.ico' \
-      .\rei3_tickets_mcp_server.py
+      ./rei3_tickets_mcp_server.py
     
     tar -czf dist.tar.gz dist/
   artifacts:
