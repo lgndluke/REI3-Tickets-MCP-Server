@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
 
 test:
   stage: test
@@ -11,3 +12,35 @@ test:
     - source .venv/bin/activate
   script: pytest -q test/**/test_*.py
   allow_failure: false
+
+build:
+  stage: build
+  image: python:3.13.5-slim
+  before_script:
+    - apt-get update && apt-get install -y zip
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - source $HOME/.local/bin/env
+    - uv sync
+    - source .venv/bin/activate
+  script: | 
+    pyinstaller \
+      --add-data '.\config.ini:.' \
+      --add-data '.\src\:.\src\' \
+      --add-data '.\manage.py:.' \
+      --collect-all uvicorn \
+      --collect-all fastapi \
+      --collect-all fastmcp \
+      --collect-all django \
+      --collect-all httpx \
+      --collect-all asgiref \
+      --collect-all configupdater \
+      --collect-all sqlparse \
+      --collect-all dotenv \
+      --icon '.\REI3-Tickets-MCP-Server-Logo.ico' \
+      .\rei3_tickets_mcp_server.py
+    
+    zip -r dist.zip dist/
+  artifacts:
+    paths:
+      - dist.zip
+    expire_in: 1 week
