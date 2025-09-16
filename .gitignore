@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# IntelliJ files
+.idea
+
+# Django
+src/web_server/main/.env
+src/web_server/static
+src/web_server/db.sqlite3
+src/web_server/.initialized
+src/web_server/mcp_app/migrations
+src/web_server/mcp_app/fixtures
+
+# Commit Message files
+commit-msg
+commit_msg_install_lin.sh
+commit_msg_install_win.ps1

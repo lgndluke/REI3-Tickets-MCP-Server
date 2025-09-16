@@ -1,0 +1,17 @@
+[project]
+name = "rei3-tickets-mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "configupdater>=3.2",
+    "django>=5.2.6",
+    "dotenv>=0.9.9",
+    "fastapi>=0.116.1",
+    "fastmcp>=2.12.2",
+    "flask>=3.1.2",
+    "httpx>=0.28.1",
+    "pyinstaller>=6.15.0",
+    "pytest>=8.4.2",
+]

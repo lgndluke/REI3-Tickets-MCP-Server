@@ -1,0 +1,43 @@
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  before_script:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - source $HOME/.local/bin/env
+    - uv sync
+    - source .venv/bin/activate
+  script: pytest -q test/**/test_*.py
+  allow_failure: false
+
+build:
+  stage: build
+  before_script:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - source $HOME/.local/bin/env
+    - uv sync
+    - source .venv/bin/activate
+  script: | 
+    pyinstaller \
+      --add-data './config.ini:.' \
+      --add-data './src/:./src/' \
+      --add-data './manage.py:.' \
+      --collect-all uvicorn \
+      --collect-all fastapi \
+      --collect-all fastmcp \
+      --collect-all django \
+      --collect-all httpx \
+      --collect-all asgiref \
+      --collect-all configupdater \
+      --collect-all sqlparse \
+      --collect-all dotenv \
+      --icon './REI3-Tickets-MCP-Server-Logo.ico' \
+      ./rei3_tickets_mcp_server.py
+    
+    tar -czf dist.tar.gz dist/
+  artifacts:
+    paths:
+      - dist.tar.gz
+    expire_in: 1 week
