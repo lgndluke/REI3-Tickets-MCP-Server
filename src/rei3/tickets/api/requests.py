@@ -87,12 +87,13 @@ async def _get_bearer_token() -> str | None:
 # Public Functions
 # ----------------------------
 
-async def close_ticket(key: str, closing_text: str) -> str:
+async def close_ticket_by_key(key: str, closing_text: str) -> str:
     """
     Close a ticket specified by its ticket key inside the REI3 Tickets application.
 
     Args:
-        key: The ticket key. (e.g.: '000015')
+        key: The ticket key. (e.g.: '000015' or '15')
+        closing_text: The closing text of the ticket.
 
     :returns:
         A success message including the closed ticket ID or an error message.
