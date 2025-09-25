@@ -22,17 +22,18 @@ class REI3TicketsMCPServer:
         # ----------------------------
 
         @self.FastMCP.tool()
-        async def close_ticket(key: str) -> str:
+        async def close_ticket_by_key(key: str, closing_text: str) -> str:
             """
             Close a ticket specified by its ticket key inside the REI3 Tickets application.
 
             Args:
-                key: The ticket key. (e.g.: '15')
+                key: The ticket key. (e.g.: '000015' or '15')
+                closing_text: The closing text of the ticket.
 
             :returns:
                 A success message including the closed ticket ID or an error message.
             """
-            return await tickets_api.close_ticket(key=key)
+            return await tickets_api.close_ticket_by_key(key=key, closing_text=closing_text)
 
         @self.FastMCP.tool()
         async def create_ticket(subject: str, description: str) -> str:
