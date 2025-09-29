@@ -16,7 +16,7 @@ API_BASE_ENDPOINT = "/api/lsw_tickets"
 CLOSE_TICKET_EXTENSION        = "/close_ticket/v1"
 CREATE_TICKET_EXTENSION       = "/create_ticket/v1"
 CREATE_WORKLOG_EXTENSION      = "/create_worklog/v1"
-GET_WORKLOGS_BY_KEY_EXTENSION = "/get_public_worklogs_by_ticket_key/v1"
+GET_WORKLOGS_EXTENSION        = "/get_worklogs/v1"
 GET_TICKET_INFO_EXTENSION     = "/get_ticket_info_by_key/v1"
 
 # ----------------------------
@@ -206,19 +206,21 @@ async def create_worklog(note: str, key: str) -> str:
         except httpx.HTTPStatusError as e:
             return f"Failed to create worklog: {e.response.text if e.response else 'Unknown Error'}"
 
-async def get_public_worklogs_by_ticket_key(key: str) -> str:
+async def get_worklogs_by_key(key: str) -> str:
     """
-    Fetches all public worklog entries of a ticket specified by its ticket key.
+    Fetch all public worklogs of a ticket specified by its key value.
 
     Args:
-        key: The ticket key. (e.g.: '000015')
+        key: The ticket key. (e.g.: '000015' or '15')
 
     :returns:
         The fetched public worklog entries or an error message.
     """
     bearer_token = await _get_bearer_token()
 
-    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
+    formatted_key = format_ticket_key(key)
+
+    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{GET_WORKLOGS_EXTENSION}?key={formatted_key}"
 
     headers = {
         "User-Agent": USER_AGENT,
@@ -226,16 +228,12 @@ async def get_public_worklogs_by_ticket_key(key: str) -> str:
         "Authorization": f"Bearer {bearer_token}",
     }
 
-    payload = {
-        # TODO Insert when API is available.
-    }
-
     async with httpx.AsyncClient(follow_redirects=True) as client:
         try:
-            response = await client.post(url, headers=headers, json=payload)
+            response = await client.get(url, headers=headers)
             response.raise_for_status()
-            # TODO
-            return ""
+            print(response.text) # DEBUG
+            return response.text
         except httpx.HTTPStatusError as e:
             return f"Failed to fetch ticket worklogs: {e.response.text if e.response else 'Unknown Error'}"
 
