@@ -126,7 +126,7 @@ async def close_ticket_by_key(key: str, closing_text: str) -> str:
             response = await client.post(url, headers=headers, json=payload)
             response.raise_for_status()
             ticket_id = response.json()["0"]
-            return f"Ticket #{ticket_id} was successfully closed."
+            return f"Ticket key {formatted_key} corresponded to ticket id #{ticket_id}. The ticket with id #{ticket_id} was closed successfully."
         except httpx.HTTPStatusError as e:
             return f"Failed to close ticket: {e.response.text if e.response else 'Unknown Error'}"
 
