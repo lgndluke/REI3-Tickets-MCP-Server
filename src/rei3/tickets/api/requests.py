@@ -87,12 +87,13 @@ async def _get_bearer_token() -> str | None:
 # Public Functions
 # ----------------------------
 
-async def close_ticket(key: str) -> str:
+async def close_ticket_by_key(key: str, closing_text: str) -> str:
     """
     Close a ticket specified by its ticket key inside the REI3 Tickets application.
 
     Args:
-        key: The ticket key. (e.g.: '000015')
+        key: The ticket key. (e.g.: '000015' or '15')
+        closing_text: The closing text of the ticket.
 
     :returns:
         A success message including the closed ticket ID or an error message.
@@ -101,6 +102,8 @@ async def close_ticket(key: str) -> str:
 
     url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
 
+    formatted_key = format_ticket_key(key)
+
     headers = {
         "User-Agent": USER_AGENT,
         "Accept": "application/json",
@@ -108,15 +111,22 @@ async def close_ticket(key: str) -> str:
     }
 
     payload = {
-        # TODO Insert when API is available.
+        "0(ticket)": {
+            "key": formatted_key,
+            "closing_text": closing_text,
+            "is_api": True
+        },
+        "1(state)": {
+            "state": "Closed",
+        }
     }
 
     async with httpx.AsyncClient(follow_redirects=True) as client:
         try:
             response = await client.post(url, headers=headers, json=payload)
             response.raise_for_status()
-            # TODO
-            return ""
+            ticket_id = response.json()["0"]
+            return f"Ticket key {formatted_key} corresponded to ticket id #{ticket_id}. The ticket with id #{ticket_id} was closed successfully."
         except httpx.HTTPStatusError as e:
             return f"Failed to close ticket: {e.response.text if e.response else 'Unknown Error'}"
 
