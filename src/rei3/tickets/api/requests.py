@@ -232,8 +232,7 @@ async def get_worklogs_by_key(key: str) -> str:
         try:
             response = await client.get(url, headers=headers)
             response.raise_for_status()
-            print(response.text) # DEBUG
-            return response.text
+            return response.json()
         except httpx.HTTPStatusError as e:
             return f"Failed to fetch ticket worklogs: {e.response.text if e.response else 'Unknown Error'}"
 
