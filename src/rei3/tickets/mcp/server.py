@@ -64,17 +64,17 @@ class REI3TicketsMCPServer:
             return await tickets_api.create_worklog(note=note, key=key)
 
         @self.FastMCP.tool()
-        async def get_public_worklogs_by_ticket_key(key: str) -> str:
+        async def get_worklogs_by_key(key: str) -> str:
             """
-            Fetch all public worklogs of a specific ticket by its key value.
+            Fetch all public worklogs of a ticket specific by its key value.
 
             Args:
-                key:  The ticket key. (e.g.: '15')
+                key: The ticket key. (e.g.: '000015' or '15')
 
             :returns:
-                A success message including X or an error message.
+                The fetched public worklog entries or an error message.
             """
-            return await tickets_api.get_public_worklogs_by_ticket_key(key=key)
+            return await tickets_api.get_worklogs_by_key(key=key)
 
         @self.FastMCP.tool()
         async def get_ticket_by_key(key: str) -> str:
