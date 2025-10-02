@@ -28,19 +28,17 @@
 
 #### Installation instructions (release)
 
-1. Install [Python 3.13.5](https://www.python.org/downloads/release/python-3135/).
+1. Create a designated user in REI3 with access to the Tickets API role. <br> This user will be used for authentication.
 
-2. Create a designated user in REI3 with access to the Tickets API role. <br> This user will be used for authentication.
+2. Set up an API Profile in your REI3 tickets instance. <br> You can create one under: Tickets > Admin Tab > API profiles 
 
-3. Set up an API Profile in your REI3 tickets instance. <br> You can create one under: Tickets > Admin Tab > API profiles 
+3. Download the [latest release](https://github.com/lgndluke/REI3-Tickets-MCP-Server/releases/latest).
 
-4. Download the [latest release](https://github.com/lgndluke/REI3-Tickets-MCP-Server/releases/latest).
+4. Set-ExecutionPolicy Bypass -> if you plan on using the shortcut 'open_config.ps1' script.
 
-5. Set-ExecutionPolicy Bypass -> if you plan on using the shortcut 'open_config.ps1' script.
+5. Adjust config.ini file variables.
 
-6. Adjust config.ini file variables.
-
-7. Start the 'REI3 Tickets MCP Server.exe'
+6. Start the 'REI3 Tickets MCP Server.exe'
 
 #### Installation instructions (manual)
 
