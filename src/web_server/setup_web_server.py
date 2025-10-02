@@ -3,19 +3,38 @@ import django
 import json
 import os
 import secrets
-import subprocess
 
 from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
+from django.core import management
 from pathlib import Path
 from src.common.config_handler import get_config_value
 
 @sync_to_async
+def _django_make_migrations():
+    management.call_command('makemigrations')
+
+@sync_to_async
+def _django_migrate():
+    management.call_command('migrate')
+
+@sync_to_async
+def _django_load_data():
+    management.call_command('loaddata', 'initial_mcp_server_config.json')
+
+@sync_to_async
+def _django_create_super_user():
+    management.call_command('createsuperuser', username='admin', email='admin@tickets.local', interactive=False)
+
+@sync_to_async
 def _set_default_admin_password():
-    # Set django-admin user password.
     user = get_user_model().objects.get(username='admin')
     user.set_password('admin')
     user.save()
+
+@sync_to_async
+def _django_collect_static():
+    management.call_command('collectstatic', interactive=False)
 
 async def setup_web_server() -> None:
     """
@@ -82,22 +101,22 @@ async def setup_web_server() -> None:
         os.chdir(root_path)
 
         # Make mcp_app migrations.
-        subprocess.check_call('python manage.py makemigrations', shell=True)
+        await _django_make_migrations()
 
         # Migrate everything.
-        subprocess.check_call('python manage.py migrate', shell=True)
+        await _django_migrate()
 
         # Load MCP server fixture as initial data.
-        subprocess.check_call('python manage.py loaddata initial_mcp_server_config.json', shell=True)
+        await _django_load_data()
 
         # Create django-admin user.
-        subprocess.check_call('python manage.py createsuperuser --noinput --username admin --email admin@tickets.local', shell=True)
+        await _django_create_super_user()
 
         # Set django-admin password.
         await _set_default_admin_password()
 
         # Create static files.
-        subprocess.check_call('python manage.py collectstatic --noinput', shell=True)
+        await _django_collect_static()
 
         # Create setup file.
         setup_file.touch()
