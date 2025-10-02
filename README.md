@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/lgndluke/REI3-Tickets-MCP-Server"><img width="200" alt="REI3_MCP_Server_Logo" src="https://github.com/user-attachments/assets/dfac4e23-ddeb-4fdd-a1fe-8af413fb2c60" /></a>
+  <a href="https://github.com/lgndluke/REI3-Tickets-MCP-Server"><img width="128" alt="REI3_MCP_Server_Logo" src="https://github.com/user-attachments/assets/0b7f6c94-6ed3-4716-8fa0-f4d99437a851" /></a>
   <br>
   REI3 Tickets MCP Server
   <br>
@@ -10,22 +10,19 @@
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
-  <a href="#roadmap">Roadmap</a> •
   <a href="#installation">Installation</a> •
   <a href="#demonstration">Demonstration</a> •
-  <a href="#credits">Credits</a>
+  <a href="#credits">Credits</a> •
+  <a href="#donate">Donate</a>
 </p>
 
 ## Key Features
 
 * Create tickets.
 * Create ticket worklog entries.
-
-## Roadmap
-
-- Close ticket by ticket key functionality.
-- Get context by ticket key functionality.
-- Get ticket info by ticket key functionality.
+* Close ticket by ticket key functionality.
+* Get context by ticket key functionality.
+* Get ticket info by ticket key functionality.
 
 ## Installation
 
@@ -114,23 +111,23 @@ For transport mode 'http':
 
 #### Creating a REI3 ticket using the REI3-Tickets-MCP-Server:
 
-<img width="1309" height="248" alt="Create_Ticket_with_MCP_Server" src="https://github.com/user-attachments/assets/2dc69e13-e742-4376-8b29-821fa1ae298a" />
+<img width="1309" height="248" alt="Create_Ticket_with_MCP_Server" src="https://github.com/user-attachments/assets/50b5294d-e4fe-4933-952b-bebeedce3176" />
 
 #### Created ticket:
 
-<img width="1918" height="947" alt="Created_Ticket_in_Not_Assigned" src="https://github.com/user-attachments/assets/19a4cd47-067a-48c3-8617-ce14919f78e9" />
+<img width="1918" height="947" alt="Created_Ticket_in_Not_Assigned" src="https://github.com/user-attachments/assets/db6524cc-be80-41d0-bbee-3efe66f71036" />
 
 #### Created ticket worklog:
 
-<img width="1876" height="806" alt="Created_Ticket_Worklog" src="https://github.com/user-attachments/assets/7f9baeab-8c46-44ad-8dce-0873d11ff3c2" />
+<img width="1876" height="806" alt="Created_Ticket_Worklog" src="https://github.com/user-attachments/assets/68ca765f-1ce9-42a4-804f-dddbbb190cea" />
 
 #### Creating a worklog entry inside an existing ticket:
 
-<img width="1320" height="398" alt="Create_Ticket_Worklog_with_MCP_Server" src="https://github.com/user-attachments/assets/abec409e-ff49-4867-8404-0f41ee669065" />
+<img width="1320" height="398" alt="Create_Ticket_Worklog_with_MCP_Server" src="https://github.com/user-attachments/assets/ed0cd005-ee54-4f77-bc0f-3eff02cb6529" />
 
 #### Created ticket worklog:
 
-<img width="1877" height="810" alt="Create_Second_Ticket_Worklog" src="https://github.com/user-attachments/assets/dd4f9b10-7c16-47b6-9318-7e50bd14adeb" />
+<img width="1877" height="810" alt="Create_Second_Ticket_Worklog" src="https://github.com/user-attachments/assets/a9c34eea-83b9-42bb-abff-a8c47faf3440" />
 
 ####
 
@@ -140,3 +137,8 @@ This software utilizes:
 
 - [REI3](https://github.com/r3-team/r3)
 
+## Donate
+
+<div align=center> 
+    <a href='https://www.paypal.com/paypalme/lgndluke' target='_blank'><img height='50' src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png' alt='Support Me via PayPal'/></a>
+</div>
