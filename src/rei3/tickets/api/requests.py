@@ -17,7 +17,7 @@ CLOSE_TICKET_EXTENSION        = "/close_ticket/v1"
 CREATE_TICKET_EXTENSION       = "/create_ticket/v1"
 CREATE_WORKLOG_EXTENSION      = "/create_worklog/v1"
 GET_WORKLOGS_EXTENSION        = "/get_worklogs/v1"
-GET_TICKET_INFO_EXTENSION     = "/get_ticket_info_by_key/v1"
+GET_TICKETS_EXTENSION         = "/get_tickets/v1"
 
 # ----------------------------
 # Private Config Accessors
@@ -87,12 +87,13 @@ async def _get_bearer_token() -> str | None:
 # Public Functions
 # ----------------------------
 
-async def close_ticket(key: str) -> str:
+async def close_ticket_by_key(key: str, closing_text: str) -> str:
     """
     Close a ticket specified by its ticket key inside the REI3 Tickets application.
 
     Args:
-        key: The ticket key. (e.g.: '000015')
+        key: The ticket key. (e.g.: '000015' or '15')
+        closing_text: The closing text of the ticket.
 
     :returns:
         A success message including the closed ticket ID or an error message.
@@ -101,6 +102,8 @@ async def close_ticket(key: str) -> str:
 
     url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
 
+    formatted_key = format_ticket_key(key)
+
     headers = {
         "User-Agent": USER_AGENT,
         "Accept": "application/json",
@@ -108,15 +111,22 @@ async def close_ticket(key: str) -> str:
     }
 
     payload = {
-        # TODO Insert when API is available.
+        "0(ticket)": {
+            "key": formatted_key,
+            "closing_text": closing_text,
+            "is_api": True
+        },
+        "1(state)": {
+            "state": "Closed",
+        }
     }
 
     async with httpx.AsyncClient(follow_redirects=True) as client:
         try:
             response = await client.post(url, headers=headers, json=payload)
             response.raise_for_status()
-            # TODO
-            return ""
+            ticket_id = response.json()["0"]
+            return f"Ticket key {formatted_key} corresponded to ticket id #{ticket_id}. The ticket with id #{ticket_id} was closed successfully."
         except httpx.HTTPStatusError as e:
             return f"Failed to close ticket: {e.response.text if e.response else 'Unknown Error'}"
 
@@ -236,19 +246,21 @@ async def get_worklogs_by_key(key: str) -> str:
         except httpx.HTTPStatusError as e:
             return f"Failed to fetch ticket worklogs: {e.response.text if e.response else 'Unknown Error'}"
 
-async def get_ticket_info_by_key(key: str) -> str:
+async def get_ticket_by_key(key: str) -> str:
     """
-    Fetches all ticket information of a ticket specified by its ticket key.
+    Fetches information of a ticket specified by its key value.
 
     Args:
-        key: The ticket key. (e.g.: '000015')
+        key: The ticket key. (e.g.: '000015' or '15')
 
     :returns:
         The fetched ticket information or an error message.
     """
     bearer_token = await _get_bearer_token()
 
-    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{CLOSE_TICKET_EXTENSION}"
+    formatted_key = format_ticket_key(key)
+
+    url = f"{_get_base_url()}{API_BASE_ENDPOINT}{GET_TICKETS_EXTENSION}?key={formatted_key}"
 
     headers = {
         "User-Agent": USER_AGENT,
@@ -256,15 +268,10 @@ async def get_ticket_info_by_key(key: str) -> str:
         "Authorization": f"Bearer {bearer_token}",
     }
 
-    payload = {
-        # TODO Insert when API is available.
-    }
-
     async with httpx.AsyncClient(follow_redirects=True) as client:
         try:
-            response = await client.post(url, headers=headers, json=payload)
+            response = await client.get(url, headers=headers)
             response.raise_for_status()
-            # TODO
-            return ""
+            return response.json()
         except httpx.HTTPStatusError as e:
-            return f"Failed to fetch ticket worklogs: {e.response.text if e.response else 'Unknown Error'}"
+            return f"Failed to fetch ticket information: {e.response.text if e.response else 'Unknown Error'}"
