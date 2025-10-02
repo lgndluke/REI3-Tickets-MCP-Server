@@ -77,17 +77,17 @@ class REI3TicketsMCPServer:
             return await tickets_api.get_public_worklogs_by_ticket_key(key=key)
 
         @self.FastMCP.tool()
-        async def get_ticket_info_by_key(key: str) -> str:
+        async def get_ticket_by_key(key: str) -> str:
             """
-            Fetch ticket information of a specific ticket by its key value.
+            Fetches ticket information of a ticket specified by its key value.
 
             Args:
-                key:  The ticket key. (e.g.: '15')
+                key:  The ticket key. (e.g.: '000015' or '15')
 
             :returns:
-                A success message including X or an error message.
+                The fetched ticket information or an error message.
             """
-            return await tickets_api.get_ticket_info_by_key(key=key)
+            return await tickets_api.get_ticket_by_key(key=key)
 
     def get_fastmcp(self) -> FastMCP:
         return self.FastMCP
