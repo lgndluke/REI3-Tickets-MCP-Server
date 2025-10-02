@@ -12,7 +12,7 @@ from src.common.config_handler import get_config_value
 
 @sync_to_async
 def _django_make_migrations():
-    management.call_command('makemigrations')
+    management.call_command('makemigrations', 'mcp_app')
 
 @sync_to_async
 def _django_migrate():
