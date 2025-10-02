@@ -17,7 +17,7 @@ CLOSE_TICKET_EXTENSION        = "/close_ticket/v1"
 CREATE_TICKET_EXTENSION       = "/create_ticket/v1"
 CREATE_WORKLOG_EXTENSION      = "/create_worklog/v1"
 GET_WORKLOGS_BY_KEY_EXTENSION = "/get_public_worklogs_by_ticket_key/v1"
-GET_TICKETS_EXTENSION     = "/get_tickets/v1"
+GET_TICKETS_EXTENSION         = "/get_tickets/v1"
 
 # ----------------------------
 # Private Config Accessors
@@ -265,7 +265,6 @@ async def get_ticket_by_key(key: str) -> str:
         try:
             response = await client.get(url, headers=headers)
             response.raise_for_status()
-            print(response.text) # DEBUG
-            return response.text
+            return response.json()
         except httpx.HTTPStatusError as e:
             return f"Failed to fetch ticket information: {e.response.text if e.response else 'Unknown Error'}"
