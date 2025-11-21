@@ -1,6 +1,8 @@
 import src.rei3.tickets.api.requests as tickets_api
 
 from fastmcp import FastMCP
+from fastmcp.server.auth import OIDCProxy
+from src.common.config_handler import get_config_value
 
 # ----------------------------
 # Class definition
@@ -15,12 +17,42 @@ class REI3TicketsMCPServer:
     # Initialize MCP Server
     # ----------------------------
     def __init__(self):
-        self.FastMCP   = FastMCP(name="REI3 Tickets MCP Server")
+
+        self.OIDCProxy = None
+
+        if get_config_value('mcp-server', 'enable_oidc_proxy').lower() == 'true':
+
+            config_url = get_config_value('mcp-server', 'config_url')
+            if not config_url:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "config_url" value was provided.')
+
+            client_id = get_config_value('mcp-server', 'client_id')
+            if not client_id:
+                raise ValueError('Error: OIDC Proxy enable in config, but no "client_id" value was provided.')
+
+            client_secret = get_config_value('mcp-server', 'client_secret')
+            if not client_secret:
+                raise ValueError('Error: OIDC Proxy enable in config, but no "client_secret" value was provided.')
+
+            base_url = get_config_value('mcp-server', 'base_url')
+            if not base_url:
+                raise ValueError('Error: OIDC Proxy enable in config, but no "base_url" value was provided.')
+
+            self.OIDCProxy = OIDCProxy(
+                config_url=config_url,
+                client_id=client_id,
+                client_secret=client_secret,
+                base_url=base_url,
+            )
+
+        self.FastMCP   = FastMCP(
+            name="REI3 Tickets MCP Server",
+            auth=self.OIDCProxy if not self.OIDCProxy is None else None
+        )
 
         # ----------------------------
         # Register MCP Server tools.
         # ----------------------------
-
         @self.FastMCP.tool()
         async def close_ticket_by_key(key: str, closing_text: str) -> str:
             """
