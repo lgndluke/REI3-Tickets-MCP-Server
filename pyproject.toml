@@ -6,9 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "configupdater>=3.2",
-    "django>=5.2.8",
     "dotenv>=0.9.9",
-    "fastapi>=0.121.3",
     "fastmcp>=2.13.1",
     "httpx>=0.28.1",
     "pyinstaller>=6.16.0",
