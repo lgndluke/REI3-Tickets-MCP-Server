@@ -1,6 +1,11 @@
 import src.rei3.tickets.api.requests as tickets_api
 
+from cryptography.fernet import Fernet
 from fastmcp import FastMCP
+from fastmcp.server.auth import OIDCProxy
+from key_value.aio.stores.disk import DiskStore
+from key_value.aio.wrappers.encryption import FernetEncryptionWrapper
+from src.common.config_handler import get_config_value
 
 # ----------------------------
 # Class definition
@@ -15,12 +20,59 @@ class REI3TicketsMCPServer:
     # Initialize MCP Server
     # ----------------------------
     def __init__(self):
-        self.FastMCP   = FastMCP(name="REI3 Tickets MCP Server")
+        self.OIDCProxy = None
+
+        if get_config_value('oidc_proxy', 'enable_oidc_proxy').lower() == 'true':
+
+            config_url = get_config_value('oidc_proxy', 'config_url')
+            if not config_url:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "config_url" value was provided.')
+
+            client_id = get_config_value('oidc_proxy', 'client_id')
+            if not client_id:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "client_id" value was provided.')
+
+            client_secret = get_config_value('oidc_proxy', 'client_secret')
+            if not client_secret:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "client_secret" value was provided.')
+
+            base_url = get_config_value('oidc_proxy', 'base_url')
+            if not base_url:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "base_url" value was provided.')
+
+            jwt_signing_key = get_config_value('oidc_proxy', 'jwt_signing_key')
+            if not jwt_signing_key:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "jwt_signing_key" value was provided.')
+
+            disk_store_directory = get_config_value('oidc_proxy', 'disk_store_directory')
+            if not disk_store_directory:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "disk_store_directory" value was provided.')
+            disk_store = DiskStore(directory=disk_store_directory)
+
+            storage_encryption_key = get_config_value('oidc_proxy', 'storage_encryption_key')
+            if not storage_encryption_key:
+                raise ValueError('Error: OIDC Proxy enabled in config, but no "storage_encryption_key" value was provided.')
+
+            self.OIDCProxy = OIDCProxy(
+                config_url      = config_url,
+                client_id       = client_id,
+                client_secret   = client_secret,
+                base_url        = base_url,
+                jwt_signing_key = None,
+                client_storage  = FernetEncryptionWrapper(
+                    key_value = disk_store,
+                    fernet    = Fernet(key=storage_encryption_key)
+                )
+            )
+
+        self.FastMCP   = FastMCP(
+            name="REI3 Tickets MCP Server",
+            auth=self.OIDCProxy if not self.OIDCProxy is None else None
+        )
 
         # ----------------------------
         # Register MCP Server tools.
         # ----------------------------
-
         @self.FastMCP.tool()
         async def close_ticket_by_key(key: str, closing_text: str) -> str:
             """

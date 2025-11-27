@@ -23,11 +23,9 @@ build:
     pyinstaller \
       --add-data './config.ini:.' \
       --add-data './src/:./src/' \
-      --add-data './manage.py:.' \
       --collect-all uvicorn \
       --collect-all fastapi \
       --collect-all fastmcp \
-      --collect-all django \
       --collect-all httpx \
       --collect-all asgiref \
       --collect-all configupdater \

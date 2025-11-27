@@ -1,4 +1,4 @@
-# Simple PowerShell script that can be used to setup the REI3 Tickets MCP servers Dockerfile.
+# Simple PowerShell script that can be used to setup the REI3 Tickets MCP servers mcp.Dockerfile.
 #
 # @author Lukas Jeckle
 # ================================================================================================================
@@ -27,16 +27,16 @@ try
 
     Write-Host ""
 
-    # Build REI3 Tickets MCP servers docker image from Dockerfile.
-    $dockerfilePath = ".\Dockerfile"
+    # Build REI3 Tickets MCP servers docker image from mcp.Dockerfile.
+    $dockerfilePath = ".\mcp.Dockerfile"
     if (-Not (Test-Path $dockerfilePath))
     {
-        throw "Dockerfile not found. Ensure you're in the right directory."
+        throw "mcp.Dockerfile not found. Ensure you're in the right directory."
     }
 
     $imageName = 'rei3_tickets_mcp_server'
 
-    Write-Host "Building Docker image '$imageName' from Dockerfile ..."
+    Write-Host "Building Docker image '$imageName' from mcp.Dockerfile ..."
 
     try
     {

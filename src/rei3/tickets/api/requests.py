@@ -1,4 +1,5 @@
 import httpx
+import json
 
 from src.common.config_handler import get_config_value
 from src.common.formatter import format_ticket_key
@@ -242,7 +243,7 @@ async def get_worklogs_by_key(key: str) -> str:
         try:
             response = await client.get(url, headers=headers)
             response.raise_for_status()
-            return response.json()
+            return json.dumps(response.json())
         except httpx.HTTPStatusError as e:
             return f"Failed to fetch ticket worklogs: {e.response.text if e.response else 'Unknown Error'}"
 
@@ -272,6 +273,6 @@ async def get_ticket_by_key(key: str) -> str:
         try:
             response = await client.get(url, headers=headers)
             response.raise_for_status()
-            return response.json()
+            return json.dumps(response.json())
         except httpx.HTTPStatusError as e:
             return f"Failed to fetch ticket information: {e.response.text if e.response else 'Unknown Error'}"
