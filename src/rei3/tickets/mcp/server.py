@@ -17,32 +17,32 @@ class REI3TicketsMCPServer:
     # Initialize MCP Server
     # ----------------------------
     def __init__(self):
-
         self.OIDCProxy = None
 
-        if get_config_value('mcp-server', 'enable_oidc_proxy').lower() == 'true':
+        if get_config_value('oidc_proxy', 'enable_oidc_proxy').lower() == 'true':
 
-            config_url = get_config_value('mcp-server', 'config_url')
+            config_url = get_config_value('oidc_proxy', 'config_url')
             if not config_url:
                 raise ValueError('Error: OIDC Proxy enabled in config, but no "config_url" value was provided.')
 
-            client_id = get_config_value('mcp-server', 'client_id')
+            client_id = get_config_value('oidc_proxy', 'client_id')
             if not client_id:
                 raise ValueError('Error: OIDC Proxy enable in config, but no "client_id" value was provided.')
 
-            client_secret = get_config_value('mcp-server', 'client_secret')
+            client_secret = get_config_value('oidc_proxy', 'client_secret')
             if not client_secret:
                 raise ValueError('Error: OIDC Proxy enable in config, but no "client_secret" value was provided.')
 
-            base_url = get_config_value('mcp-server', 'base_url')
+            base_url = get_config_value('oidc_proxy', 'base_url')
             if not base_url:
                 raise ValueError('Error: OIDC Proxy enable in config, but no "base_url" value was provided.')
 
             self.OIDCProxy = OIDCProxy(
-                config_url=config_url,
-                client_id=client_id,
-                client_secret=client_secret,
-                base_url=base_url,
+                config_url     = config_url,
+                client_id      = client_id,
+                client_secret  = client_secret,
+                base_url       = base_url,
+                client_storage = None
             )
 
         self.FastMCP   = FastMCP(
