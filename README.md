@@ -74,6 +74,43 @@
 
 #### MCP-Server JSON configuration examples for AnythingLLM:
 
+For transport mode 'http':
+
+```json
+{
+  "mcpServers": {
+	"REI3-Tickets-MCP-Server" : {
+		"url": "http://127.0.0.1:54321/mcp/",
+		"type": "streamable"
+	}
+  }
+}
+```
+
+> [!NOTE]
+> Some MCP-Clients do not yet natively support OAuth Flows.
+> If this affects you, the 'mcp-remote' package might be a solution.
+> Link: https://www.npmjs.com/package/mcp-remote
+
+For transport mode 'http' with the 'mcp-remote' package.
+```json
+{
+  "mcpServers": {
+	"REI3-Tickets-MCP-Server" : {
+		"command": "npx",
+		"args": [
+          "mcp-remote",
+          "https://127.0.0.1:54321/mcp/"
+        ]
+	}
+  }
+}
+```
+
+> [!IMPORTANT] 
+> 'stdio' transport has been **removed** in version after release: 2025-10-03_02  
+> Please refer to transport mode 'http'.
+
 For transport mode 'stdio':
 
 ```json
@@ -87,19 +124,6 @@ For transport mode 'stdio':
 			"run",
 			"rei3_tickets_mcp_server.py"
 		]
-	}
-  }
-}
-```
-
-For transport mode 'http':
-
-```json
-{
-  "mcpServers": {
-	"REI3-Tickets-MCP-Server" : {
-		"url": "http://127.0.0.1:54321/mcp/",
-		"type": "streamable"
 	}
   }
 }
