@@ -29,9 +29,9 @@
 #### Installation instructions (release)
 
 > [!NOTE]
-> The FastMCP disk storage backend is currently blocking the creation of a new release build.
-> Issue link: https://github.com/jlowin/fastmcp/issues/2514
-> Until this is resolved, please refer to other installation methods.
+> The FastMCP disk storage backend is currently blocking the creation of a new release build. <br>
+> Issue link: https://github.com/jlowin/fastmcp/issues/2514 <br>
+> Until this is resolved, please refer to other installation methods. <br>
 
 1. Create a designated user in REI3 with access to the Tickets API role. <br> This user will be used for authentication.
 
@@ -93,9 +93,9 @@ For transport mode 'http':
 ```
 
 > [!NOTE]
-> Some MCP-Clients do not yet natively support OAuth Flows.
-> If this affects you, the 'mcp-remote' package might be a solution.
-> Link: https://www.npmjs.com/package/mcp-remote
+> Some MCP-Clients do not yet natively support OAuth Flows. <br>
+> If this affects you, the 'mcp-remote' package might be a solution. <br>
+> Link: https://www.npmjs.com/package/mcp-remote <br>
 
 For transport mode 'http' with the 'mcp-remote' package.
 ```json
@@ -113,8 +113,8 @@ For transport mode 'http' with the 'mcp-remote' package.
 ```
 
 > [!IMPORTANT] 
-> 'stdio' transport has been **removed** in version after release: 2025-10-03_02  
-> Please refer to transport mode 'http'.
+> 'stdio' transport has been **removed** in versions later than release: 2025-10-03_02 <br>
+> Please refer to transport mode 'http'. <br>
 
 For transport mode 'stdio':
 
