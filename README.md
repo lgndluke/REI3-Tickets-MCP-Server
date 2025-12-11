@@ -28,6 +28,11 @@
 
 #### Installation instructions (release)
 
+> [!NOTE]
+> The FastMCP disk storage backend is currently blocking the creation of a new release build.
+> Issue link: https://github.com/jlowin/fastmcp/issues/2514
+> Until this is resolved, please refer to other installation methods.
+
 1. Create a designated user in REI3 with access to the Tickets API role. <br> This user will be used for authentication.
 
 2. Set up an API Profile in your REI3 tickets instance. <br> You can create one under: Tickets > Admin Tab > API profiles 
