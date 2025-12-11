@@ -918,7 +918,7 @@ dependencies = [
 requires-dist = [
     { name = "configupdater", specifier = ">=3.2" },
     { name = "dotenv", specifier = ">=0.9.9" },
-    { name = "fastmcp", specifier = ">=2.13.1" },
+    { name = "fastmcp", specifier = "==2.13.3" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "pyinstaller", specifier = ">=6.16.0" },
     { name = "pytest", specifier = ">=9.0.1" },
