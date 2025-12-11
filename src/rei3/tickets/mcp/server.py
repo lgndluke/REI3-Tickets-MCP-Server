@@ -7,19 +7,14 @@ from key_value.aio.stores.disk import DiskStore
 from key_value.aio.wrappers.encryption import FernetEncryptionWrapper
 from src.common.config_handler import get_config_value
 
-# ----------------------------
-# Class definition
-# ----------------------------
-
 class REI3TicketsMCPServer:
     """
     The main REI3 Tickets MCP Server class.
     """
-
-    # ----------------------------
-    # Initialize MCP Server
-    # ----------------------------
     def __init__(self):
+        # ----------------------------
+        # Initialize OIDCProxy
+        # ----------------------------
         self.OIDCProxy = None
 
         if get_config_value('oidc_proxy', 'enable_oidc_proxy').lower() == 'true':
@@ -61,17 +56,22 @@ class REI3TicketsMCPServer:
                 jwt_signing_key = None,
                 client_storage  = FernetEncryptionWrapper(
                     key_value = disk_store,
-                    fernet    = Fernet(key=storage_encryption_key)
+                    fernet    = Fernet(
+                        key=storage_encryption_key
+                    )
                 )
             )
 
+        # ----------------------------
+        # Initialize MCP-Server
+        # ----------------------------
         self.FastMCP   = FastMCP(
             name="REI3 Tickets MCP Server",
-            auth=self.OIDCProxy if not self.OIDCProxy is None else None
+            auth=self.OIDCProxy
         )
 
         # ----------------------------
-        # Register MCP Server tools.
+        # Register MCP-Server tools.
         # ----------------------------
         @self.FastMCP.tool()
         async def close_ticket_by_key(key: str, closing_text: str) -> str:
